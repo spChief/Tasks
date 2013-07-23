@@ -1,0 +1,25 @@
+<div class="component withShadow text">
+    <div class="title">
+        <div class="main">
+            <div class="text text-title">
+                <?=$this->errorCode;?> &mdash; <?=$this->message;?>
+            </div>
+        </div>
+        <div class="left"></div>
+        <div class="right"></div>
+    </div>
+    <div class="body textWrapper">
+        <div class="back404">
+                <h3>Exception information:</h3>
+                <p>
+                    <strong>Message:</strong>
+                    <span class="jsExceptionMessage"><?php echo $this->exception->getMessage(); ?></span>
+                </p>
+
+                <h3>Stack trace:</h3>
+                <pre><?= $this->exception->getTraceAsString() ?></pre>
+            <div class="clear"></div>
+        </div>
+
+    </div>
+</div>

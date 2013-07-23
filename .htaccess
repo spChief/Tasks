@@ -1,0 +1,24 @@
+AddDefaultCharset UTF-8
+#SetEnv APPLICATION_ENV production
+SetEnv APPLICATION_ENV development
+
+php_flag magic_quotes_gpc       off
+php_flag magic_quotes_runtime   off
+php_flag register_globals       off
+php_flag short_open_tags        on
+
+php_value mbstring.language               neutral
+php_value mbstring.func_overload          0
+php_value mbstring.http_input             pass
+php_value mbstring.http_output            pass
+php_value mbstring.encoding_translation   0
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/x-javascript text/javascript application/javascript application/json

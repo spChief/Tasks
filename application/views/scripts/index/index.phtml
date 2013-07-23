@@ -1,0 +1,25 @@
+<div id="tasksList" class="tasks-container jsTasksContainer">
+    <div class="bar-top jsBarTop">
+        <div class="title"><?= $this->list->title; ?></div>
+        <div class="buttons jsButtons">
+            <div class="button minimize jsButton" data-action="minimize"></div>
+            <div class="button maximize jsButton" data-action="maximize"></div>
+            <div class="button close jsButton" data-action="close"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="list jsList">
+        <? foreach ($this->list->tasks as $task) : ?>
+            <?= $this->partial('_templates/task.phtml', $task); ?>
+        <? endforeach; ?>
+    </div>
+    <div class="bar-bottom jsBarBottom">
+        <div class="buttons">
+            <div class="button add jsButton" data-action="add"></div>
+            <div class="button delete jsButton" data-action="delete"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
