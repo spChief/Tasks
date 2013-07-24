@@ -89,3 +89,49 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     .tasks-container .bar-bottom .button.delete {
         background-image: url('data:image/gif;base64,R0lGODlhDQANAPcAAP//////zP//mf//Zv//M///AP/M///MzP/Mmf/MZv/MM//MAP+Z//+ZzP+Zmf+ZZv+ZM/+ZAP9m//9mzP9mmf9mZv9mM/9mAP8z//8zzP8zmf8zZv8zM/8zAP8A//8AzP8Amf8AZv8AM/8AAMz//8z/zMz/mcz/Zsz/M8z/AMzM/8zMzMzMmczMZszMM8zMAMyZ/8yZzMyZmcyZZsyZM8yZAMxm/8xmzMxmmcxmZsxmM8xmAMwz/8wzzMwzmcwzZswzM8wzAMwA/8wAzMwAmcwAZswAM8wAAJn//5n/zJn/mZn/Zpn/M5n/AJnM/5nMzJnMmZnMZpnMM5nMAJmZ/5mZzJmZmZmZZpmZM5mZAJlm/5lmzJlmmZlmZplmM5lmAJkz/5kzzJkzmZkzZpkzM5kzAJkA/5kAzJkAmZkAZpkAM5kAAGb//2b/zGb/mWb/Zmb/M2b/AGbM/2bMzGbMmWbMZmbMM2bMAGaZ/2aZzGaZmWaZZmaZM2aZAGZm/2ZmzGZmmWZmZmZmM2ZmAGYz/2YzzGYzmWYzZmYzM2YzAGYA/2YAzGYAmWYAZmYAM2YAADP//zP/zDP/mTP/ZjP/MzP/ADPM/zPMzDPMmTPMZjPMMzPMADOZ/zOZzDOZmTOZZjOZMzOZADNm/zNmzDNmmTNmZjNmMzNmADMz/zMzzDMzmTMzZjMzMzMzADMA/zMAzDMAmTMAZjMAMzMAAAD//wD/zAD/mQD/ZgD/MwD/AADM/wDMzADMmQDMZgDMMwDMAACZ/wCZzACZmQCZZgCZMwCZAABm/wBmzABmmQBmZgBmMwBmAAAz/wAzzAAzmQAzZgAzMwAzAAAA/wAAzAAAmQAAZgAAMwAAADZzswAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAADQANAAAINgABCASArWDBgQixISSY0KBDgwwXLnxIEaJCiQIvKtSYMeLGjgw5cgzZceRHkh5TYoxIsOLFgAA7');
     }
+
+.tasks-container .list .empty-placeholder {
+    height: 100%;
+    background: #ddd;
+    color: #777;
+    font: 14px/16px Arial, sans-serif;
+    position: relative;
+    text-align: center;
+}
+    .list .empty-placeholder .text {
+        position: relative;
+        top: 40%;
+    }
+
+.task {
+    font: 14px/16px Arial, sans-serif;
+    padding: 5px;
+}
+.task:hover {
+    background-color: #ececec;
+}
+.task.selected {
+    background-color: #e4edff;
+}
+.task.done .title,
+.task.done .created {
+    text-decoration: line-through;
+    transition: text-decoration 0.5s ease;
+}
+    .task .cell {
+        line-height: 20px;
+    }
+    .task .check {
+        float: left;
+        height: 20px;
+    }
+    .task .title {
+        float: left;
+        padding-left: 5px;
+        width: 200px;
+    }
+    .task .created {
+        padding-left: 25px;
+        clear: both;
+        height: 20px;
+    }

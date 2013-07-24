@@ -13,5 +13,7 @@ class Zend_View_Helper_InitJs extends Zend_View_Helper_Abstract {
         $this->view->headScript()->appendFile('/js/vendor/jquery.js');
         $this->view->headScript()->appendFile('/js/vendor/jquerymx.js');
         $this->view->headScript()->appendFile('/js/application.js');
+        $this->view->headScript()->appendScript('var URL_TASK_SAVE = "' . $this->view->url(array('action' => 'save'), 'task') . '";');
+        $this->view->headScript()->appendScript('var URL_TASK_DESTROY = "' . $this->view->url(array('action' => 'destroy'), 'task') . '";');
     }
 }

@@ -6,7 +6,7 @@
  * Time: 23:33
  */
 
-class Model_Db_Users extends Zend_Db_Table_Abstract {
+class Model_Db_Users extends Core_Db_Table {
 
     protected $_name = "users";
 
@@ -32,5 +32,18 @@ class Model_Db_Users extends Zend_Db_Table_Abstract {
             $this->_columnCredential,
             $this->_credentialTreatment
         );
+    }
+
+    /**
+     * @return null|Zend_Db_Table_Row_Abstract
+     */
+    public function getCurrent() {
+
+        $identity = Zend_Auth::getInstance()->getIdentity();
+
+        $select = $this->select();
+        $select->where('login = ?', $identity);
+
+        return $this->fetchRow($select);
     }
 }

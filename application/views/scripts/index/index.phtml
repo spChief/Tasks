@@ -1,6 +1,6 @@
-<div id="tasksList" class="tasks-container jsTasksContainer">
+<div id="tasksList" class="tasks-container jsTaskList">
     <div class="bar-top jsBarTop">
-        <div class="title"><?= $this->list->title; ?></div>
+        <div class="title"><?= $this->listActive->title; ?></div>
         <div class="buttons jsButtons">
             <div class="button minimize jsButton" data-action="minimize"></div>
             <div class="button maximize jsButton" data-action="maximize"></div>
@@ -10,14 +10,25 @@
         <div class="clear"></div>
     </div>
     <div class="list jsList">
-        <? foreach ($this->list->tasks as $task) : ?>
-            <?= $this->partial('_templates/task.phtml', $task); ?>
-        <? endforeach; ?>
+        <? if ($this->listActive) : ?>
+            <? $tasks = $this->listActive->getTasks(); ?>
+            <? if ($tasks->count() > 0) : ?>
+                <table class="tasks-table">
+                <? foreach ($tasks as $task) : ?>
+                    <?= $this->partial('_templates/html/task.phtml', array('task' => $task)); ?>
+                <? endforeach; ?>
+                </table>
+            <? else : ?>
+                <div class="empty-placeholder">
+                    <span class="text">Пока нет ни одной задачи.</span>
+                </div>
+            <? endif; ?>
+        <? endif; ?>
     </div>
     <div class="bar-bottom jsBarBottom">
         <div class="buttons">
-            <div class="button add jsButton" data-action="add"></div>
-            <div class="button delete jsButton" data-action="delete"></div>
+            <div class="button add jsButton" data-action="addTask"></div>
+            <div class="button delete jsButton" data-action="deleteTask"></div>
             <div class="clear"></div>
         </div>
         <div class="clear"></div>

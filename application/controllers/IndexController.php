@@ -10,10 +10,13 @@ class IndexController extends Zend_Controller_Action {
 
     public function indexAction() {
 
+        $listModel = new Model_Db_List();
+        $listActive = $listModel->getActive();
+//        $listSet = $listModel->getList();
 
-        $this->view->assign('list', (object)array(
-            'title' => 'Some list',
-            'tasks' => array()
+        $this->view->assign(array(
+            'listActive' => $listActive,
+//            'listSet' => $listSet, // TODO
         ));
     }
 }

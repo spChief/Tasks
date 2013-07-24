@@ -36,8 +36,6 @@ class AuthController extends Zend_Controller_Action {
 
     public function registerAction() {
 
-        $form = new Form_Register();
-
-        $this->view->assign('form', $form);
+        // TODO: registration
     }
 }
