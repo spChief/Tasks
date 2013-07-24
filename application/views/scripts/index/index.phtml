@@ -9,20 +9,14 @@
         </div>
         <div class="clear"></div>
     </div>
-    <div class="list jsList">
-        <? if ($this->listActive) : ?>
-            <? $tasks = $this->listActive->getTasks(); ?>
-            <? if ($tasks->count() > 0) : ?>
-                <table class="tasks-table">
-                <? foreach ($tasks as $task) : ?>
-                    <?= $this->partial('_templates/html/task.phtml', array('task' => $task)); ?>
-                <? endforeach; ?>
-                </table>
-            <? else : ?>
-                <div class="empty-placeholder">
-                    <span class="text">Пока нет ни одной задачи.</span>
-                </div>
-            <? endif; ?>
+    <div class="list jsList" data-id="<?= $this->listActive->id; ?>">
+        <? $tasks = $this->listActive->getTasks(); ?>
+        <? if ($tasks->count() > 0) : ?>
+            <table class="tasks-table">
+            <? foreach ($tasks as $task) : ?>
+                <?= $this->partial('_templates/html/task.phtml', array('task' => $task)); ?>
+            <? endforeach; ?>
+            </table>
         <? endif; ?>
     </div>
     <div class="bar-bottom jsBarBottom">
@@ -34,3 +28,6 @@
         <div class="clear"></div>
     </div>
 </div>
+
+<?= $this->partial('_templates/ejs/list-empty.ejs'); ?>
+<?= $this->partial('_templates/ejs/task.ejs'); ?>

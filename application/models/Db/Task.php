@@ -27,18 +27,24 @@ class Model_Db_Task extends Core_Db_Table {
 
     public function save($data) {
 
-        if (!$data['id']) {
+        if (!isset($data['id']) && isset($data['list_id'])) {
+
             return $this->createTask($data);
-        } else {
+        } elseif (isset($data['id'])) {
+
             return $this->updateTask($data);
+        } else {
+
+            return false;
         }
     }
 
     public function createTask($data) {
 
+        unset($data['date_created']);
         $row = $this->createRow($data);
 
-        if ($row->save()) {
+        if ($row->canEdit() && $row->save()) {
             return $row;
         } else {
             return false;
@@ -48,8 +54,10 @@ class Model_Db_Task extends Core_Db_Table {
     public function updateTask($data) {
 
         $row = $this->getById($data['id']);
+        unset($data['list_id']);
+        unset($data['date_created']);
 
-        if ($row) {
+        if ($row && $row->canEdit()) {
             $row->setFromArray($data);
 
             if ($row->save()) {
@@ -64,7 +72,7 @@ class Model_Db_Task extends Core_Db_Table {
 
         $row = $this->getById($id);
 
-        if ($row && $row->canDelete()) {
+        if ($row && $row->canEdit()) {
             return $row->delete();
         } else {
             return false;

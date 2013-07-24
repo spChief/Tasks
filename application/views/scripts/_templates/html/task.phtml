@@ -1,5 +1,5 @@
 <div class="task jsTask <?= (bool)$this->task->done ? 'done' : ''; ?>" data-id="<?= $this->task->id; ?>">
     <div class="cell check"><input type="checkbox" class="jsCheckDone" <?= (bool)$this->task->done ? 'checked' : ''; ?>/></div>
     <div class="cell title jsTitle" contenteditable><?= $this->task->title; ?></div>
-    <div class="cell created"><?= $this->prepareDate($this->task->date_created); ?></div>
+    <div class="cell created jsDateCreated"><?= $this->prepareDate($this->task->date_created); ?></div>
 </div>

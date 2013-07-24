@@ -95,11 +95,13 @@
         {
             pluginName: 'taskList',
             defaults: {
-                taskList: []
+                taskList: [],
+                listId: false
             }
         },
         {
             init: function() {
+                this.options.listId = $('.jsList', this.element).data('id');
                 this.initTasks();
             },
 
@@ -123,7 +125,7 @@
             },
 
             '.jsTask click': function(obj, e) {
-                this.setActiveTask(obj);
+                this.setActiveTask($(obj));
             },
 
             // collect all task and apply controller to each
@@ -131,14 +133,17 @@
                 var $tasks = $('.jsTask', this.element);
 
                 $tasks.each(this.proxy(function(i, obj) {
-                    this.options.taskList.push($(obj).task().controller());
+                    this.options.taskList.push($(obj).task({data: {list_id: this.options.listId} }).controller());
                 }));
+
+                this.updated();
             },
 
-            setActiveTask: function(obj) {
+            // select task
+            setActiveTask: function($task) {
                 $('.jsTask', this.element).removeClass('selected');
-                $(obj).addClass('selected');
-                this.options.selectedTask = $(obj);
+                $task.addClass('selected');
+                this.options.selectedTask = $task;
             },
 
             minimize: function() {
@@ -153,17 +158,70 @@
                 return true;
             },
 
+            // add new task to document, but save will be when title will change
             addTask: function() {
+                var $task = $($.View('tplTask'));
+
+                $('.jsList', this.element).append($task);
+                this.setActiveTask($task);
+
+                this.options.taskList.push($task.task({
+                    data: {
+                        list_id: this.options.listId
+                    },
+                    focusOnInit: true
+                }).controller());
+
+                this.updated();
+
                 return true;
             },
 
+            // delete task from document and server and select sibling task
             deleteTask: function() {
                 if (!this.options.selectedTask) {
                     alert('Сначала выберите задачу из списка');
                     return false;
                 }
-                this.options.selectedTask.controller().delete();
+
+                var $selected = this.options.selectedTask;
+                var id = $selected.controller().options.data.id;
+
+                var $sibling = this.getSibling(this.options.selectedTask);
+
+                for (var i in this.options.taskList) {
+                    var task = this.options.taskList[i];
+                    if (task.options.data.id == id) {
+                        this.options.taskList.splice(i, 1);
+                    }
+                }
+
+                    $selected.controller().delete();
+                this.setActiveTask($sibling);
+
+                this.updated();
+
                 return true;
+            },
+
+            // get sibling for some object
+            getSibling: function($obj) {
+                var $next = $obj.next();
+
+                if ($next.length) {
+                    return $next;
+                } else {
+                    return $obj.prev();
+                }
+            },
+
+            // function for updating view after some actions
+            updated: function() {
+                if (this.options.taskList.length > 0) {
+                    $('.jsEmptyPlaceholder', this.element).remove();
+                } else {
+                    $('.jsList', this.element).html('tplListEmptyPlaceholder', {});
+                }
             }
         }
     );
@@ -175,12 +233,17 @@
             defaults: {
                 data: {},
                 titleKeyupTimeout: 500,
-                titleKeyupTimeoutId: false
+                titleKeyupTimeoutId: false,
+                focusOnInit: false
             }
         },
         {
             init: function() {
                 this.parseData();
+
+                if (this.options.focusOnInit) {
+                    $('.jsTitle', this.element).focus();
+                }
             },
 
             '.jsCheckDone change': function(obj, e) {
@@ -233,6 +296,7 @@
                     this.proxy(function (response) {
                         if (response.status) {
                             this.options.data = response.data;
+                            this.updated();
                             if (typeof callback == 'function') {
                                 callback(response.data);
                             }
@@ -257,6 +321,12 @@
                         }
                     })
                 );
+            },
+
+            updated: function() {
+
+                $('.jsTitle', this.element).text(this.options.data.title);
+                $('.jsDateCreated', this.element).text(this.options.data.date_created);
             }
         }
     );
